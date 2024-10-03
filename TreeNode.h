@@ -5,9 +5,9 @@ template<typename T>
 class TreeNode {
 private:
     T m_data;
-    TreeNode* m_parent;
-    TreeNode* m_lchild;
-    TreeNode* m_rchild;
+    TreeNode<T>* m_parent;
+    TreeNode<T>* m_lchild;
+    TreeNode<T>* m_rchild;
 
 public:
     // constructors
@@ -28,13 +28,13 @@ public:
     const T& get_data() const {
         return m_data;
     }
-    const TreeNode* get_parent() const {
+    const TreeNode<T>* get_parent() const {
         return m_parent;
     }
-    const TreeNode* get_lchild() const {
+    const TreeNode<T>* get_lchild() const {
         return m_lchild;
     }
-    const TreeNode* get_rchild() const {
+    const TreeNode<T>* get_rchild() const {
         return m_rchild;
     }
 
@@ -42,14 +42,14 @@ public:
     void set_data(const T& data) {
         m_data = data;
     }
-    void set_parent(const TreeNode* node) {
-        m_parent = new TreeNode(node.m_parent->m_data);
+    void set_parent(const TreeNode<T>* node) {
+        m_parent = new TreeNode((node->get_parent())->get_data());
     }
-    void set_lchild(const TreeNode* node) {
-        m_lchild = new TreeNode(node.m_lchild->m_data);
+    void set_lchild(const TreeNode<T>* node) {
+        m_lchild = new TreeNode((node->get_lchild())->get_data());
     }
-    void set_rchild(const TreeNode* node) {
-        m_rchild = new TreeNode(node.m_rchild->m_data);
+    void set_rchild(const TreeNode<T>* node) {
+        m_rchild = new TreeNode((node->get_rchild())->get_data());
     }
 };
 
