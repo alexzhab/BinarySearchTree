@@ -12,5 +12,8 @@ int main() {
     std::cout << "node1: " << node1;
     std::cout << "node3: " << node3;
 
+    BinTree<int> tree1;
+    BinTree<int> tree2 = tree1;
+
     return 0;
 }
