@@ -213,7 +213,7 @@ public:
     friend std::ostream & operator<<(std::ostream & os, const BinTree<T>& tree) {
         std::ostringstream ostr;
         ostr.precision(2);
-        print(ostr, "", m_root);
+        print(ostr, "", "", m_root);
         os << ostr.str();
         return os;
     }
