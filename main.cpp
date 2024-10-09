@@ -14,11 +14,11 @@ int main() {
     if (it != nullptr) {
         std::cout << "Found value: " << *it;
 
-        auto next = tree1.get_next(it);
+        auto next = tree1.get_next(const_cast<TreeNode<int> *>(it));
         if (next)
             std::cout << "Next: " << *next;
 
-        auto prev = tree1.get_prev(it);
+        auto prev = tree1.get_prev(const_cast<TreeNode<int> *>(it));
         if (prev)
             std::cout << "Prev: " << *prev;
     }
@@ -37,6 +37,11 @@ int main() {
         std::cout << "Min: " << *tree1.min();
     if (tree1.max() != nullptr)
         std::cout << "Max: " << *tree1.max();
+
+    std::cout << "Print with iterators:" << std::endl;
+    for (auto it = tree1.cbegin(), end = tree1.cend(); it != end; ++it)
+        std::cout << *it << " ";
+    std::cout << std::endl;
 
     return 0;
 }
