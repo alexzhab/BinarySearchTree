@@ -119,9 +119,9 @@ private:
         if (!m_compare(node->get_data(), data) && !m_compare(data, node->get_data()))
             return node;
         if (m_compare(data, node->get_data()))
-           return find(node->get_lchild(), data);
+            return find(node->get_lchild(), data);
         if (m_compare(node->get_data(), data))
-           return find(node->get_rchild(), data);
+            return find(node->get_rchild(), data);
         return nullptr;
     }
 
@@ -181,11 +181,11 @@ private:
         if (node) {
             ostr << padding << pointer;
             ostr << node->get_data() << std::endl;
-            
+
             if (pointer.find("└──") != std::string::npos)
                 padding += "   ";
             else if (pointer != "")
-            padding += "│  ";
+                padding += "│  ";
             print(ostr, padding, (node->get_lchild()) ? "├──R " : "└──R ", node->get_rchild());
             print(ostr, padding, "└──L ", node->get_lchild());
         }
