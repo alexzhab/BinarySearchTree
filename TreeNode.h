@@ -62,9 +62,13 @@ public:
     }
     void set_lchild(TreeNode<T>* const node) {
         m_lchild = node;
+        if (node)
+            node->set_parent(this);
     }
     void set_rchild(TreeNode<T>* const node) {
         m_rchild = node;
+        if (node)
+            node->set_parent(this);
     }
 
     friend std::ostream & operator<<(std::ostream & os, const TreeNode<T>& node) {
