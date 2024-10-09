@@ -229,8 +229,8 @@ public:
         return find(m_root, data) != nullptr;
     }
 
-    TreeNode<T> * add(const T& data) {
-        return add(m_root, data);
+    void add(const T& data) {
+        m_root = add(m_root, data);
     }
 
     void remove(const T& data) {
