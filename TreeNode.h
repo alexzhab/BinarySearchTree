@@ -284,17 +284,17 @@ public:
     // const iterator
     struct ConstIterator {
     private:
-        BinTree<T> * m_tree;
+        const BinTree<T> * m_tree;
         TreeNode<T> * m_ptr;
 
     public:
-        ConstIterator(BinTree<T> * tree, TreeNode<T> * ptr) {
-            m_ptr = ptr;
-            m_tree = new BinTree<T>(*tree);
+        ConstIterator(const BinTree<T> * tree, TreeNode<T> * ptr) 
+        : m_tree(tree)
+        , m_ptr(ptr) {
         }
         ~ConstIterator() = default;
 
-        const TreeNode<T> & operator*() const {
+        TreeNode<T> operator*() const {
             assert(m_ptr != nullptr);
             return m_ptr->get_data();
         }
@@ -305,7 +305,8 @@ public:
         }
 
         ConstIterator & operator++() {
-            m_ptr = m_tree->get_next(m_ptr);
+            m_ptr = const_cast<TreeNode<T> *>(m_tree->get_next(m_ptr));
+            return *this;
         }
         ConstIterator operator++(int) {
             ConstIterator tmp = *this;
@@ -314,7 +315,8 @@ public:
         }
 
         ConstIterator & operator--() {
-            m_ptr = m_tree->get_prev(m_ptr);
+            m_ptr = const_cast<TreeNode<T> *>(m_tree->get_prev(m_ptr));
+            return *this;
         }
         ConstIterator operator--(int) {
             ConstIterator tmp = *this;
@@ -331,7 +333,7 @@ public:
     };
 
     ConstIterator cbegin() const {
-        return ConstIterator(this, min(m_root));
+        return ConstIterator(this, const_cast<TreeNode<T> *>(min(m_root)));
     }
     ConstIterator cend() const {
         return ConstIterator(this, nullptr);
