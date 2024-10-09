@@ -90,17 +90,17 @@ private:
     TreeNode<T>* m_root{nullptr};
     Functor<T> m_compare;
 
-    void copyTree(const TreeNode<T>* src, TreeNode<T>*& dst) {
-        dst = new TreeNode<T>(*src);
+    TreeNode<T> * copyTree(const TreeNode<T>* src) {
+        TreeNode<T>* dst = new TreeNode<T>(*src);
         const TreeNode<T>* src_lchild = src->get_lchild();
         const TreeNode<T>* src_rchild = src->get_rchild();
 
-        TreeNode<T>* dst_lchild = dst->get_lchild();
-        TreeNode<T>* dst_rchild = dst->get_rchild();
         if (src_lchild)
-            copyTree(src_lchild, dst_lchild);
+            dst->set_lchild(copyTree(src_lchild));
         if (src_rchild)
-            copyTree(src_rchild, dst_rchild);
+            dst->set_rchild(copyTree(src_rchild));
+
+        return dst;
     }
 
     void deleteTree(TreeNode<T>* node) {
@@ -183,7 +183,7 @@ public:
     }
     BinTree(const BinTree& tree) {
         if (tree.m_root)
-            copyTree(tree.m_root, m_root);
+            m_root = copyTree(tree.m_root);
     }
     BinTree & operator=(const BinTree<T>& tree) {
         if (&tree == this)
@@ -191,7 +191,7 @@ public:
         ~BinTree();
 
         if (tree.m_root)
-            copyTree(tree.m_root, m_root);
+            m_root = copyTree(tree.m_root);
 
         return *this;
     }
