@@ -131,9 +131,9 @@ private:
             return node;
         }
         if (m_compare(data, node->get_data()))
-            node->m_lchild = add(node->get_lchild(), data);
+            node->set_lchild(add(node->get_lchild(), data));
         else if (m_compare(node->get_data(), data))
-            node->m_rchild = add(node->get_rchild(), data);
+            node->set_rchild(add(node->get_rchild(), data));
         return node;
     }
 
@@ -144,14 +144,14 @@ private:
             delete node;
         else if (!node->get_lchild()) {
             TreeNode<T> * r = node->get_rchild();
-            node->m_data = r->get_data();
-            node->m_rchild = nullptr;
+            node->set_data(r->get_data());
+            node->set_rchild(nullptr);
             delete r;
         }
         else if (!node->get_rchild()) {
-            TreeNode<T> * l = node->get_lchild();
-            node->m_data = l->get_data();
-            node->m_lchild = nullptr;
+            TreeNode<T>  *l = node->get_lchild();
+            node->set_data(l->get_data());
+            node->set_lchild(nullptr);
             delete l;
         }
         else {
