@@ -20,6 +20,10 @@ public:
     , m_lchild(nullptr)
     , m_rchild(nullptr) {
     }
+    TreeNode(const T &data, const TreeNode<T>* parent)
+        : m_data(data)
+        , m_parent(parent) {
+    }
     TreeNode(const TreeNode<T>& node) : TreeNode(node.get_data()) {
     }
     ~TreeNode() = default;
@@ -168,6 +172,10 @@ public:
     BinTree() = default;
     BinTree(const T& data) {
         m_root = new TreeNode<T>(data);
+    }
+    BinTree(const T* data, int size) {
+        for (int i{}; i < size; ++i)
+            this->add(data[i]);
     }
     BinTree(const BinTree& tree) {
         if (tree.m_root)
