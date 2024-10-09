@@ -165,13 +165,13 @@ private:
         }
     }
 
-    TreeNode<T> * min(TreeNode<T> * node) const {
+    const TreeNode<T> * min(const TreeNode<T> * node) const {
         if (node->get_lchild() == nullptr)
             return node;
         return min(node->get_lchild());
     }
 
-    TreeNode<T> * max(TreeNode<T> * node) const {
+    const TreeNode<T> * max(const TreeNode<T> * node) const {
         if (node->get_rchild() == nullptr)
             return node;
         return max(node->get_rchild());
@@ -238,20 +238,20 @@ public:
         remove(tmp);
     }
 
-    TreeNode<T> * min() {
+    const TreeNode<T> * min() {
         return min(m_root);
     }
 
-    TreeNode<T> * max() {
+    const TreeNode<T> * max() {
         return max(m_root);
     }
 
-    TreeNode<T> * get_next(TreeNode<T>* node) {
+    const TreeNode<T> * get_next(const TreeNode<T>* node) const {
         if (node->get_rchild() != nullptr)
             return min(node->get_rchild());
 
-        TreeNode<T> * parent = node->get_parent();
-        TreeNode<T> * tmp = node;
+        const TreeNode<T> * parent = const_cast<TreeNode<T> *>(node->get_parent());
+        const TreeNode<T> * tmp = const_cast<TreeNode<T> *>(node);
         while (parent != nullptr && tmp == parent->get_rchild()) {
             tmp = parent;
             parent = parent->get_parent();
@@ -259,12 +259,12 @@ public:
         return parent;
     }
 
-    TreeNode<T> * get_prev(TreeNode<T>* node) {
+    const TreeNode<T> * get_prev(const TreeNode<T>* node) const {
         if (node->get_lchild() != nullptr)
             return max(node->get_lchild());
 
-        TreeNode<T> * parent = node->get_parent();
-        TreeNode<T> * tmp = node;
+        const TreeNode<T> * parent = const_cast<TreeNode<T> *>(node->get_parent());
+        const TreeNode<T> * tmp = const_cast<TreeNode<T> *>(node);
         while (parent != nullptr && tmp == parent->get_lchild())
         {
             tmp = parent;
