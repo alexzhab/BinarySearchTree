@@ -281,6 +281,61 @@ public:
         return os;
     }
 
+    // const iterator
+    struct ConstIterator {
+    private:
+        BinTree<T> * m_tree;
+        TreeNode<T> * m_ptr;
+
+    public:
+        ConstIterator(BinTree<T> * tree, TreeNode<T> * ptr) {
+            m_ptr = ptr;
+            m_tree = new BinTree<T>(*tree);
+        }
+        ~ConstIterator() = default;
+
+        const TreeNode<T> & operator*() const {
+            assert(m_ptr != nullptr);
+            return m_ptr->get_data();
+        }
+
+        const TreeNode<T> * operator->() const {
+            assert(m_ptr != nullptr);
+            return m_ptr;
+        }
+
+        ConstIterator & operator++() {
+            m_ptr = m_tree->get_next(m_ptr);
+        }
+        ConstIterator operator++(int) {
+            ConstIterator tmp = *this;
+            ++(*this);
+            return tmp;
+        }
+
+        ConstIterator & operator--() {
+            m_ptr = m_tree->get_prev(m_ptr);
+        }
+        ConstIterator operator--(int) {
+            ConstIterator tmp = *this;
+            --(*this);
+            return tmp;
+        }
+
+        friend bool operator==(const ConstIterator& a, const ConstIterator& b) {
+            return a.m_ptr == b.m_ptr;
+        }
+        friend bool operator!=(const ConstIterator& a, const ConstIterator& b) {
+            return a.m_ptr != b.m_ptr;
+        }
+    };
+
+    ConstIterator cbegin() const {
+        return ConstIterator(this, min(m_root));
+    }
+    ConstIterator cend() const {
+        return ConstIterator(this, nullptr);
+    }
 };
 
 #endif // TREE_NODE_H
