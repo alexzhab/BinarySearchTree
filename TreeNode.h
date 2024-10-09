@@ -140,8 +140,14 @@ private:
     void remove(TreeNode<T> * node) {
         if (!node)
             return;
-        if (!node->get_lchild() && !node->get_rchild())
+        if (!node->get_lchild() && !node->get_rchild()) {
+            TreeNode<T> *parent = node->get_parent();
+            if (m_compare(node->get_data(), parent->get_data()))
+                parent->set_lchild(nullptr);
+            else
+                parent->set_rchild(nullptr);
             delete node;
+        }
         else if (!node->get_lchild()) {
             TreeNode<T> * r = node->get_rchild();
             node->set_data(r->get_data());
@@ -155,10 +161,20 @@ private:
             delete l;
         }
         else {
-            TreeNode<T> * next = node++;
-            node->m_data = next->get_data();
-            remove(next);
+            assert(false && "Not implemented.");
         }
+    }
+
+    const TreeNode<T> * min(const TreeNode<T> * node) const {
+        if (node->get_lchild() == nullptr)
+            return node;
+        return min(node->get_lchild());
+    }
+
+    const TreeNode<T> * max(const TreeNode<T> * node) const {
+        if (node->get_rchild() == nullptr)
+            return node;
+        return max(node->get_rchild());
     }
 
     void print(std::ostringstream & ostr, std::string padding, std::string pointer, const TreeNode<T>* node) const {
@@ -222,8 +238,39 @@ public:
         remove(tmp);
     }
 
-    TreeNode<T> * operator++() {
-        // to-do
+    const TreeNode<T> * min() const {
+        return min(m_root);
+    }
+
+    const TreeNode<T> * max() const {
+        return max(m_root);
+    }
+
+    const TreeNode<T> * get_next(const TreeNode<T>* node) const {
+        if (node->get_rchild() != nullptr)
+            return min(node->get_rchild());
+
+        TreeNode<T> * parent = const_cast<TreeNode<T> *>(node->get_parent());
+        TreeNode<T> * tmp = const_cast<TreeNode<T> *>(node);
+        while (parent != nullptr && tmp == parent->get_rchild()) {
+            tmp = parent;
+            parent = parent->get_parent();
+        }
+        return parent;
+    }
+
+    const TreeNode<T> * get_prev(const TreeNode<T>* node) const {
+        if (node->get_lchild() != nullptr)
+            return max(node->get_lchild());
+
+        TreeNode<T> * parent = const_cast<TreeNode<T> *>(node->get_parent());
+        TreeNode<T> * tmp = const_cast<TreeNode<T> *>(node);
+        while (parent != nullptr && tmp == parent->get_lchild())
+        {
+            tmp = parent;
+            parent = parent->get_parent();
+        }
+        return parent;
     }
 
     friend std::ostream & operator<<(std::ostream & os, const BinTree<T>& tree) {
