@@ -79,7 +79,7 @@ public:
 
 template<typename T>
 struct Functor {
-    bool operator()(const T& t1, const T& t2) {
+    bool operator()(const T& t1, const T& t2) const {
         return (t1 < t2);
     }
 };
@@ -113,15 +113,16 @@ private:
         delete node;
     }
 
-    TreeNode<T> * find(const TreeNode<T> * node, const T& data) const {
+    const TreeNode<T> * find(const TreeNode<T> * node, const T& data) const {
         if (!node)
             return nullptr;
-        if (!m_compare(node->get_data(), data) && !m_compare(data, node->get_data))
+        if (!m_compare(node->get_data(), data) && !m_compare(data, node->get_data()))
             return node;
         if (m_compare(data, node->get_data()))
            return find(node->get_lchild(), data);
         if (m_compare(node->get_data(), data))
            return find(node->get_rchild(), data);
+        return nullptr;
     }
 
     TreeNode<T> * add(TreeNode<T> * node, const T& data) {
@@ -204,7 +205,7 @@ public:
         m_root = nullptr;
     }
 
-    TreeNode<T> * find(const T& data) const {
+    const TreeNode<T> * find(const T& data) const {
         return find(m_root, data);
     }
 
@@ -217,7 +218,7 @@ public:
     }
 
     void remove(const T& data) {
-        TreeNode<T> * tmp = find(data);
+        TreeNode<T> * tmp = const_cast<TreeNode<T> *>(find(data));
         remove(tmp);
     }
 
