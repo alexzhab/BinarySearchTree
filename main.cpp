@@ -14,11 +14,11 @@ int main() {
     if (it != nullptr) {
         std::cout << "Found value: " << *it;
 
-        auto next = tree1.get_next(const_cast<TreeNode<int> *>(it));
+        auto next = tree1.get_next(it);
         if (next)
             std::cout << "Next: " << *next;
 
-        auto prev = tree1.get_prev(const_cast<TreeNode<int> *>(it));
+        auto prev = tree1.get_prev(it);
         if (prev)
             std::cout << "Prev: " << *prev;
     }
@@ -40,7 +40,7 @@ int main() {
 
     std::cout << "Print with iterators:" << std::endl;
     for (auto it = tree1.cbegin(), end = tree1.cend(); it != end; ++it)
-        std::cout << *it << " ";
+        std::cout << *it;
     std::cout << std::endl;
 
     return 0;
