@@ -160,14 +160,17 @@ private:
         }
     }
 
-    void print(std::ostringstream & ostr, std::string padding, std::string pointer, const TreeNode<>T * node) {
+    void print(std::ostringstream & ostr, std::string padding, std::string pointer, const TreeNode<T>* node) const {
         if (node) {
             ostr << padding << pointer;
             ostr << node->get_data() << std::endl;
             
+            if (pointer.find("└──") != std::string::npos)
+                padding += "   ";
+            else if (pointer != "")
             padding += "│  ";
-            print(ostr, padding, (node->get_lchild()) ? "├──" : "└──", node->get_lchild());
-            print(ostr, padding, "└──", node->get_rchild());
+            print(ostr, padding, (node->get_lchild()) ? "├──R " : "└──R ", node->get_rchild());
+            print(ostr, padding, "└──L ", node->get_lchild());
         }
     }
 
@@ -225,7 +228,7 @@ public:
     friend std::ostream & operator<<(std::ostream & os, const BinTree<T>& tree) {
         std::ostringstream ostr;
         ostr.precision(2);
-        print(ostr, "", "", m_root);
+        tree.print(ostr, "", "", tree.m_root);
         os << ostr.str();
         return os;
     }
