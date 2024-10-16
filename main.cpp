@@ -40,7 +40,7 @@ int main() {
 
     std::cout << "Print with iterators:" << std::endl;
     for (auto it = tree1.cbegin(), end = tree1.cend(); it != end; ++it)
-        std::cout << *it;
+        std::cout << *it << " ";
     std::cout << std::endl;
 
     return 0;
