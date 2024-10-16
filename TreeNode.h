@@ -182,7 +182,7 @@ private:
             ostr << padding << pointer;
             ostr << node->get_data() << std::endl;
 
-            if (pointer.find("└──") != std::string::npos)
+            if (pointer == "└──R " || pointer == "└──L ")
                 padding += "   ";
             else if (pointer != "")
                 padding += "│  ";
