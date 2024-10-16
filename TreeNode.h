@@ -149,16 +149,26 @@ private:
             delete node;
         }
         else if (!node->get_lchild()) {
+            TreeNode<T> *parent = node->get_parent();
             TreeNode<T> * r = node->get_rchild();
-            node->set_data(r->get_data());
+            if (m_compare(r->get_data(), parent->get_data()))
+                parent->set_lchild(r);
+            else
+                parent->set_rchild(r);
+            node->set_parent(nullptr);
             node->set_rchild(nullptr);
-            delete r;
+            delete node;
         }
         else if (!node->get_rchild()) {
+            TreeNode<T> *parent = node->get_parent();
             TreeNode<T>  *l = node->get_lchild();
-            node->set_data(l->get_data());
+            if (m_compare(l->get_data(), parent->get_data()))
+                parent->set_lchild(l);
+            else
+                parent->set_rchild(l);
+            node->set_parent(nullptr);
             node->set_lchild(nullptr);
-            delete l;
+            delete node;
         }
         else {
             assert(false && "Not implemented.");
