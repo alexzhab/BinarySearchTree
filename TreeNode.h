@@ -77,18 +77,25 @@ public:
     }
 };
 
-template<typename T>
-struct Functor {
+struct Compare {
+    template<typename T>
     bool operator()(const T& t1, const T& t2) const {
         return (t1 < t2);
     }
 };
 
-template<typename T>
+struct CompareReversed {
+    template<typename T>
+    bool operator()(const T& t1, const T& t2) const {
+        return (t1 > t2);
+    }
+};
+
+template<typename T, typename Functor=Compare>
 class BinTree {
 private:
     TreeNode<T>* m_root{nullptr};
-    Functor<T> m_compare;
+    Functor m_compare;
 
     TreeNode<T>* copyTree(const TreeNode<T>* src) {
         TreeNode<T>* dst = new TreeNode<T>(*src);
@@ -293,11 +300,11 @@ public:
     // const iterator
     struct ConstIterator {
     private:
-        const BinTree<T> * m_tree;
-        const TreeNode<T> * m_ptr;
+        const BinTree<T, Functor>* m_tree;
+        const TreeNode<T>* m_ptr;
 
     public:
-        ConstIterator(const BinTree<T> * tree, const TreeNode<T> * ptr) 
+        ConstIterator(const BinTree<T, Functor>* tree, const TreeNode<T>* ptr)
         : m_tree(tree)
         , m_ptr(ptr) {
         }
