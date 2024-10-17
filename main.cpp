@@ -29,8 +29,12 @@ int main() {
     std::cout << "Removed 1:" << std::endl
               << tree1;
 
-    tree1.remove(9);
-    std::cout << "Removed 9:" << std::endl
+    tree1.remove(6);
+    std::cout << "Removed 6:" << std::endl
+              << tree1;
+
+    tree1.remove(5);
+    std::cout << "Removed 5:" << std::endl
               << tree1;
 
     if (tree1.min() != nullptr)
