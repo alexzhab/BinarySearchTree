@@ -1,4 +1,5 @@
 #include "TreeNode.h"
+#include "SetMap.h"
 #include <iostream>
 
 int main() {
@@ -46,6 +47,10 @@ int main() {
     for (auto it = tree1.cbegin(), end = tree1.cend(); it != end; ++it)
         std::cout << *it << " ";
     std::cout << std::endl;
+
+    Set<int> s(&tree1);
+    std::cout << s.contains(10) << std::endl;
+    s.add(11);
 
     return 0;
 }
