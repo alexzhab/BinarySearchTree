@@ -148,31 +148,45 @@ private:
         if (!node)
             return;
         if (!node->get_lchild() && !node->get_rchild()) {
-            TreeNode<T> *parent = node->get_parent();
-            if (m_compare(node->get_data(), parent->get_data()))
-                parent->set_lchild(nullptr);
-            else
-                parent->set_rchild(nullptr);
+            TreeNode<T>* parent = node->get_parent();
+            if (parent) {
+                if (m_compare(node->get_data(), parent->get_data()))
+                    parent->set_lchild(nullptr);
+                else
+                    parent->set_rchild(nullptr);
+            }
             delete node;
         }
         else if (!node->get_lchild()) {
-            TreeNode<T> *parent = node->get_parent();
-            TreeNode<T> * r = node->get_rchild();
-            if (m_compare(r->get_data(), parent->get_data()))
-                parent->set_lchild(r);
-            else
-                parent->set_rchild(r);
+            TreeNode<T>* parent = node->get_parent();
+            TreeNode<T>* r = node->get_rchild();
+            if (parent) {
+                if (m_compare(r->get_data(), parent->get_data()))
+                    parent->set_lchild(r);
+                else
+                    parent->set_rchild(r);
+            }
+            else {
+                r->set_parent(nullptr);
+                m_root = r;
+            }
             node->set_parent(nullptr);
             node->set_rchild(nullptr);
             delete node;
         }
         else if (!node->get_rchild()) {
-            TreeNode<T> *parent = node->get_parent();
-            TreeNode<T>  *l = node->get_lchild();
-            if (m_compare(l->get_data(), parent->get_data()))
-                parent->set_lchild(l);
-            else
-                parent->set_rchild(l);
+            TreeNode<T>* parent = node->get_parent();
+            TreeNode<T>* l = node->get_lchild();
+            if (parent) {
+                if (m_compare(l->get_data(), parent->get_data()))
+                    parent->set_lchild(l);
+                else
+                    parent->set_rchild(l);
+            }
+            else {
+                l->set_parent(nullptr);
+                m_root = l;
+            }
             node->set_parent(nullptr);
             node->set_lchild(nullptr);
             delete node;
