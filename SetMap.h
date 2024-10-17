@@ -56,3 +56,5 @@ public:
     bool contains(const T& data) const {
         return m_tree->contains(data);
     }
+
+#endif // SET_MAP_H
