@@ -192,7 +192,9 @@ private:
             delete node;
         }
         else {
-            assert(false && "Not implemented.");
+            TreeNode<T>* next = const_cast<TreeNode<T>*>(get_next(node));
+            node->set_data(next->get_data());
+            remove(next);
         }
     }
 
