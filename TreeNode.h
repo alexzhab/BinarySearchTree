@@ -20,9 +20,9 @@ public:
     , m_lchild(nullptr)
     , m_rchild(nullptr) {
     }
-    TreeNode(const T &data, const TreeNode<T>* parent)
-        : m_data(data)
-        , m_parent(parent) {
+    TreeNode(const T& data, const TreeNode<T>* parent)
+    : m_data(data)
+    , m_parent(parent) {
     }
     TreeNode(const TreeNode<T>& node) : TreeNode(node.get_data()) {
     }
@@ -90,7 +90,7 @@ private:
     TreeNode<T>* m_root{nullptr};
     Functor<T> m_compare;
 
-    TreeNode<T> * copyTree(const TreeNode<T>* src) {
+    TreeNode<T>* copyTree(const TreeNode<T>* src) {
         TreeNode<T>* dst = new TreeNode<T>(*src);
         const TreeNode<T>* src_lchild = src->get_lchild();
         const TreeNode<T>* src_rchild = src->get_rchild();
@@ -113,7 +113,7 @@ private:
         delete node;
     }
 
-    const TreeNode<T> * find(const TreeNode<T> * node, const T& data) const {
+    const TreeNode<T>* find(const TreeNode<T>* node, const T& data) const {
         if (!node)
             return nullptr;
         if (!m_compare(node->get_data(), data) && !m_compare(data, node->get_data()))
@@ -125,7 +125,7 @@ private:
         return nullptr;
     }
 
-    TreeNode<T> * add(TreeNode<T> * node, const T& data) {
+    TreeNode<T>* add(TreeNode<T>* node, const T& data) {
         if (!node) {
             node = new TreeNode<T>(data);
             return node;
@@ -137,7 +137,7 @@ private:
         return node;
     }
 
-    void remove(TreeNode<T> * node) {
+    void remove(TreeNode<T>* node) {
         if (!node)
             return;
         if (!node->get_lchild() && !node->get_rchild()) {
@@ -175,19 +175,19 @@ private:
         }
     }
 
-    const TreeNode<T> * min(const TreeNode<T> * node) const {
+    const TreeNode<T>* min(const TreeNode<T>* node) const {
         if (node->get_lchild() == nullptr)
             return node;
         return min(node->get_lchild());
     }
 
-    const TreeNode<T> * max(const TreeNode<T> * node) const {
+    const TreeNode<T>* max(const TreeNode<T>* node) const {
         if (node->get_rchild() == nullptr)
             return node;
         return max(node->get_rchild());
     }
 
-    void print(std::ostringstream & ostr, std::string padding, std::string pointer, const TreeNode<T>* node) const {
+    void print(std::ostringstream& ostr, std::string padding, std::string pointer, const TreeNode<T>* node) const {
         if (node) {
             ostr << padding << pointer;
             ostr << node->get_data() << std::endl;
@@ -215,7 +215,7 @@ public:
         if (tree.m_root)
             m_root = copyTree(tree.m_root);
     }
-    BinTree & operator=(const BinTree<T>& tree) {
+    BinTree& operator=(const BinTree& tree) {
         if (&tree == this)
             return *this;
         ~BinTree();
@@ -231,7 +231,7 @@ public:
         m_root = nullptr;
     }
 
-    const TreeNode<T> * find(const T& data) const {
+    const TreeNode<T>* find(const T& data) const {
         return find(m_root, data);
     }
 
@@ -244,24 +244,24 @@ public:
     }
 
     void remove(const T& data) {
-        TreeNode<T> * tmp = const_cast<TreeNode<T> *>(find(data));
+        TreeNode<T>* tmp = const_cast<TreeNode<T>*>(find(data));
         remove(tmp);
     }
 
-    const TreeNode<T> * min() const {
+    const TreeNode<T>* min() const {
         return min(m_root);
     }
 
-    const TreeNode<T> * max() const {
+    const TreeNode<T>* max() const {
         return max(m_root);
     }
 
-    const TreeNode<T> * get_next(const TreeNode<T>* node) const {
+    const TreeNode<T>* get_next(const TreeNode<T>* node) const {
         if (node->get_rchild() != nullptr)
             return min(node->get_rchild());
 
-        const TreeNode<T> * parent = node->get_parent();
-        const TreeNode<T> * tmp = node;
+        const TreeNode<T>* parent = node->get_parent();
+        const TreeNode<T>* tmp = node;
         while (parent != nullptr && tmp == parent->get_rchild()) {
             tmp = parent;
             parent = parent->get_parent();
@@ -269,21 +269,20 @@ public:
         return parent;
     }
 
-    const TreeNode<T> * get_prev(const TreeNode<T>* node) const {
+    const TreeNode<T>* get_prev(const TreeNode<T>* node) const {
         if (node->get_lchild() != nullptr)
             return max(node->get_lchild());
 
-        const TreeNode<T> * parent = node->get_parent();
-        const TreeNode<T> * tmp = node;
-        while (parent != nullptr && tmp == parent->get_lchild())
-        {
+        const TreeNode<T>* parent = node->get_parent();
+        const TreeNode<T>* tmp = node;
+        while (parent != nullptr && tmp == parent->get_lchild()) {
             tmp = parent;
             parent = parent->get_parent();
         }
         return parent;
     }
 
-    friend std::ostream & operator<<(std::ostream & os, const BinTree<T>& tree) {
+    friend std::ostream& operator<<(std::ostream& os, const BinTree& tree) {
         std::ostringstream ostr;
         ostr.precision(2);
         tree.print(ostr, "", "", tree.m_root);
@@ -304,17 +303,17 @@ public:
         }
         ~ConstIterator() = default;
 
-        const T & operator*() const {
+        const T& operator*() const {
             assert(m_ptr != nullptr);
             return m_ptr->get_data();
         }
 
-        const T & operator->() const {
+        const T& operator->() const {
             assert(m_ptr != nullptr);
             return m_ptr->get_data();
         }
 
-        ConstIterator & operator++() {
+        ConstIterator& operator++() {
             m_ptr = m_tree->get_next(m_ptr);
             return *this;
         }
@@ -324,7 +323,7 @@ public:
             return tmp;
         }
 
-        ConstIterator & operator--() {
+        ConstIterator& operator--() {
             m_ptr = m_tree->get_prev(m_ptr);
             return *this;
         }
