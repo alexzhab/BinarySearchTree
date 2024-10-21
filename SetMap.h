@@ -1,41 +1,40 @@
 #ifndef SET_MAP_H
 #define SET_MAP_H
+
+#include "Pair.h"
 #include "TreeNode.h"
 #include <iostream>
 
-template<typename T, typename U>
-class Pair {
+template<typename T, typename Functor=Compare>
+class Set {
 private:
-    T m_first;
-    U m_second;
+    BinTree<T, Functor>* m_tree{nullptr};
 
 public:
-    Pair(const T &first, const U &second)
-    : m_first(first)
-    , m_second(second) {
+    Set() {
+        m_tree = new BinTree<T, Functor>();
     }
-    ~Pair() = default;
+    Set(BinTree<T, Functor>* tree) 
+    : m_tree(tree) {
+    }
+    ~Set() = default;
 
-    // non-const getters
-    T& get_first() {
-        return m_first;
-    }
-    U& get_second() {
-        return m_second;
+    BinTree<T, Functor>* get_tree() const {
+        return m_tree;
     }
 
-    // const getters
-    const T& get_first() const {
-        return m_first;
+    void add(const T& data) {
+        m_tree->add(data);
     }
-    const U& get_second() const {
-        return m_second;
+    bool contains(const T& data) const {
+        return m_tree->contains(data);
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const Pair<T, U>& p) {
-        os << p.get_first() << p.get_second() << std::endl;
+    friend std::ostream& operator<<(std::ostream& os, const Set<T, Functor>& set) {
+        os << *set.get_tree() << std::endl;
         return os;
     }
+
     typename BinTree<T, Functor>::ConstIterator cbegin() const {
         return m_tree->cbegin();
     }
@@ -44,6 +43,7 @@ public:
     }
     typename BinTree<T, Functor>::ConstIterator& operator--() = delete;
     typename BinTree<T, Functor>::ConstIterator& operator--(int) = delete;
+};
 private:
     BinTree<T, Functor>* m_tree;
 
