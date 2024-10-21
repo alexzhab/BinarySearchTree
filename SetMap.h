@@ -36,10 +36,14 @@ public:
         os << p.get_first() << p.get_second() << std::endl;
         return os;
     }
-};
-
-template<typename T, typename Functor=Compare>
-class Set {
+    typename BinTree<T, Functor>::ConstIterator cbegin() const {
+        return m_tree->cbegin();
+    }
+    typename BinTree<T, Functor>::ConstIterator cend() const {
+        return m_tree->cend();
+    }
+    typename BinTree<T, Functor>::ConstIterator& operator--() = delete;
+    typename BinTree<T, Functor>::ConstIterator& operator--(int) = delete;
 private:
     BinTree<T, Functor>* m_tree;
 

@@ -51,6 +51,10 @@ int main() {
     Set<int> s(&tree1);
     std::cout << s.contains(10) << std::endl;
     s.add(11);
+    std::cout << "Print with iterators:" << std::endl;
+    for (auto it = s.cbegin(), end = s.cend(); it != end; ++it)
+        std::cout << *it << " ";
+    std::cout << std::endl;
 
     return 0;
 }
