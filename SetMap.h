@@ -52,8 +52,8 @@ template<typename T, typename Functor=Compare>
 class Multiset {
     using Internal_T = Pair<T, int>;
 private:
-    BinTree<Pair<T, int>, PairCompare<T, Functor>>* m_tree;
-    
+    BinTree<Internal_T, PairCompare<T, Functor>>* m_tree;
+
 public:
     Multiset() {
         m_tree = new BinTree<Internal_T, PairCompare<T, Functor>>();
@@ -61,8 +61,8 @@ public:
     ~Multiset() = default;
 
     void add(const T& data) {
-        Pair<T, int> p(data, 1);
-        TreeNode<Pair<T, int>>* found = const_cast<TreeNode<Pair<T, int>>*>(m_tree->find(p));
+        Internal_T p(data, 1);
+        TreeNode<Internal_T>* found = const_cast<TreeNode<Internal_T>*>(m_tree->find(p));
         if (found) {
             int& counter = found->get_data().get_second();
             counter++;
