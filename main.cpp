@@ -51,10 +51,19 @@ int main() {
     Set<int> s(&tree1);
     std::cout << s.contains(10) << std::endl;
     s.add(11);
+    std::cout << s;
     std::cout << "Print with iterators:" << std::endl;
     for (auto it = s.cbegin(), end = s.cend(); it != end; ++it)
         std::cout << *it << " ";
     std::cout << std::endl;
+
+    Multiset<int> ms;
+    ms.add(1);
+    ms.add(3);
+    ms.add(5);
+    ms.add(1);
+    ms.add(1);
+    std::cout << ms;
 
     return 0;
 }
