@@ -1,6 +1,8 @@
 #ifndef PAIR_H
 #define PAIR_H
 
+#include <iostream>
+
 template<typename T, typename U>
 class Pair {
 private:
@@ -35,7 +37,7 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Pair<T, U>& p) {
-        os << p.get_first() << p.get_second() << std::endl;
+        os << p.get_first() << " x" << p.get_second() << std::endl;
         return os;
     }
 };
