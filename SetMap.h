@@ -44,18 +44,19 @@ public:
 template<typename T, typename Functor>
 struct PairCompare {
     bool operator()(const Pair<T, int>& t1, const Pair<T, int>& t2) const {
-        return Functor(t1.get_first(), t2.get_first());
+        return Functor()(t1.get_first(), t2.get_first());
     }
 };
 
-template<typename T, typename Functor>
+template<typename T, typename Functor=Compare>
 class Multiset {
+    using Internal_T = Pair<T, int>;
 private:
     BinTree<Pair<T, int>, PairCompare<T, Functor>>* m_tree;
-
+    
 public:
     Multiset() {
-        m_tree = new BinTree<Pair<T, int>, Functor>();
+        m_tree = new BinTree<Internal_T, PairCompare<T, Functor>>();
     }
     ~Multiset() = default;
 
