@@ -1,5 +1,6 @@
 #ifndef TREE_NODE_H
 #define TREE_NODE_H
+
 #include <iostream>
 #include <sstream>
 #include <cassert>
@@ -43,6 +44,9 @@ public:
     }
 
     // non-const getters
+    T& get_data() {
+        return m_data;
+    }
     TreeNode<T>* get_parent() {
         return m_parent;
     }
