@@ -68,8 +68,17 @@ public:
     }
 
     void add(const T& data) {
-        m_tree->add(data);
+        Pair<T, int> p(data, 1);
+        TreeNode<Pair<T, int>>* found = const_cast<TreeNode<Pair<T, int>>*>(m_tree->find(p));
+        if (found) {
+            int& counter = found->get_data().get_second();
+            counter++;
+        }
+        else {
+            m_tree->add(p);
+        }
     }
+
     bool contains(const T& data) const {
         return m_tree->contains(data);
     }
