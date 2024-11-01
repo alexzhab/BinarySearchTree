@@ -19,10 +19,6 @@ public:
     }
     ~Set() = default;
 
-    BinTree<T, Functor>* get_tree() const {
-        return m_tree;
-    }
-
     void add(const T& data) {
         m_tree->add(data);
     }
@@ -31,7 +27,7 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Set<T, Functor>& set) {
-        os << *set.get_tree() << std::endl;
+        os << *(set.m_tree) << std::endl;
         return os;
     }
 
@@ -63,10 +59,6 @@ public:
     }
     ~Multiset() = default;
 
-    BinTree<Pair<T, int>, Functor>* get_tree() const {
-        return m_tree;
-    }
-
     void add(const T& data) {
         Pair<T, int> p(data, 1);
         TreeNode<Pair<T, int>>* found = const_cast<TreeNode<Pair<T, int>>*>(m_tree->find(p));
@@ -84,7 +76,7 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Multiset<T, Functor>& mset) {
-        os << *mset.get_tree() << std::endl;
+        os << *(mset.m_tree) << std::endl;
         return os;
     }
 
