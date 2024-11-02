@@ -37,7 +37,7 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Pair<T, U>& p) {
-        os << p.get_first() << " x" << p.get_second() << std::endl;
+        os << p.get_first() << " x" << p.get_second();
         return os;
     }
 };
